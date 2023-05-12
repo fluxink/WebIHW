@@ -29,14 +29,5 @@ CREATE TABLE IF NOT EXISTS `items` (
     PRIMARY KEY (`id`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=1;
 
-INSERT INTO `categories` (`name`) VALUES
-('Спальня'),
-('Вітальня'),
-('Кухня'),
-('Ванна кімната'),
-('Дитяча кімната'),
-('Офіс'),
-('Інше');
-
 INSERT INTO `users` (`email`, `password`, `role`) VALUES
-('admin@gmail.com', '$2y$10$whViDQ/7ueISw5YLvgqbP.dFWsghApmH2CTwokCp182UrTtAdwbBm', 'admin');
+    ('admin@gmail.com', '$2y$10$whViDQ/7ueISw5YLvgqbP.dFWsghApmH2CTwokCp182UrTtAdwbBm', 'admin');

@@ -111,4 +111,10 @@ class User extends Model {
         $this->db->updateData('users', $data, "email = '$this->email'");
     }
 
+    public function getAll() {
+        $sql = "SELECT * FROM users";
+        $this->db->runQuery($sql);
+        return $this->db->getData();
+    }
+
 }

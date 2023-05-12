@@ -9,6 +9,7 @@ class Database extends mysqli {
 
     public function __construct() {
         $this->connections = new mysqli(DB_HOST, DB_USER, DB_PASS, DB_NAME);
+        mysqli_set_charset($this->connections, 'utf8');
         if ($this->connections->connect_error) {
             die("Connection failed: " . $this->connections->connect_error);
         }

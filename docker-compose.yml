@@ -13,7 +13,6 @@ services:
   db:
     container_name: mysql_sticky
     image: mysql:latest
-    command: --default-authentication-plugin=mysql_native_password
     restart: always
     volumes:
       - ./database/setup.sql:/docker-entrypoint-initdb.d/setup.sql

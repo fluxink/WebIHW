@@ -11,11 +11,8 @@ class Item extends Model {
     public $category_id;
     public $category_name;
 
-    public function __construct($data) {
+    public function __construct() {
         parent::__construct();
-        foreach ($data as $key => $value) {
-            $this->$key = $value;
-        }
     }
 
     public function save() {
@@ -42,8 +39,8 @@ class Item extends Model {
     public function getPage($page, $limit) {
         $offset = ($page - 1) * $limit;
         $sql = "SELECT items.*, categories.name AS category_name FROM items INNER JOIN categories ON items.category_id = categories.id LIMIT $limit OFFSET $offset";
-        $this->db->runQuery($sql);
-        return $this->db->getData();
+        
+        return $this->db->runQuery($sql);
     }
 
     public function getByCategory($category_id) {
