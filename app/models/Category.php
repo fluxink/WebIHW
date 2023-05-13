@@ -1,6 +1,6 @@
 <?php
 
-require_once 'app/core/Model.php';
+require_once $_SERVER["DOCUMENT_ROOT"] . '/app/core/Model.php';
 
 class Category extends Model {
     public $id;
@@ -12,8 +12,8 @@ class Category extends Model {
 
     public function getAll() {
         $sql = "SELECT * FROM categories";
-        $this->db->runQuery($sql);
-        return $this->db->getData();
+
+        return $this->db->runQuery($sql);
     }
 
     public function save() {

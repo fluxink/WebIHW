@@ -17,8 +17,10 @@ const toggleModal = (event) => {
   event.preventDefault();
   const modal = document.getElementById(event.currentTarget.getAttribute("data-target"));
   typeof modal != "undefined" && modal != null && isModalOpen(modal)
-    ? closeModal(modal)
-    : openModal(modal);
+  ? closeModal(modal)
+  : openModal(modal);
+  // const modalToClose = document.querySelector("dialog[open]");
+  // typeof modalToClose != "undefined" && modalToClose != null && modalToClose != modal && closeModal(modalToClose);
 };
 
 // Is modal open
@@ -51,13 +53,13 @@ const closeModal = (modal) => {
 };
 
 // Close with a click outside
-document.addEventListener("click", (event) => {
-  if (visibleModal != null) {
-    const modalContent = visibleModal.querySelector("article");
-    const isClickInside = modalContent.contains(event.target);
-    !isClickInside && closeModal(visibleModal);
-  }
-});
+// document.addEventListener("click", (event) => {
+//   if (visibleModal != null) {
+//     const modalContent = visibleModal.querySelector("article");
+//     const isClickInside = modalContent.contains(event.target);
+//     !isClickInside && closeModal(visibleModal);
+//   }
+// });
 
 // Close with Esc key
 document.addEventListener("keydown", (event) => {

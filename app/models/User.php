@@ -1,10 +1,14 @@
 <?php
 
-session_start();
+if (!isset($_SESSION)) {
+    session_start();
+}
 
-require_once 'app/core/Model.php';
 
-class User extends Model {
+require_once $_SERVER["DOCUMENT_ROOT"] . '/app/core/Model.php';
+
+class User extends Model
+{
     public $email;
     public $password;
     public $role;
@@ -16,11 +20,13 @@ class User extends Model {
     public $phone = null;
     public $errors = [];
 
-    public function __construct() {
+    public function __construct()
+    {
         parent::__construct();
     }
 
-    public function validate() {
+    public function validate()
+    {
         if (empty($this->email)) {
             $this->errors['email'] = 'Email обов\'язковий';
         } else if (!filter_var($this->email, FILTER_VALIDATE_EMAIL)) {
@@ -65,7 +71,8 @@ class User extends Model {
         return $this->errors;
     }
 
-    public function isExist() {
+    public function isExist()
+    {
         $sql = "SELECT * FROM users WHERE email = '$this->email'";
         $this->db->runQuery($sql);
         if ($this->db->numRows() > 0) {
@@ -74,13 +81,15 @@ class User extends Model {
         return false;
     }
 
-    public function save() {
+    public function save()
+    {
         $fields = 'email, password, role, first_name, last_name, phone, address, city, zip';
         $data = "'$this->email', '$this->password', '$this->role', '$this->first_name', '$this->last_name', '$this->phone', '$this->address', '$this->city', '$this->zip'";
         $this->db->insertData('users', $data, $fields);
     }
 
-    public function register() {
+    public function register()
+    {
         if ($this->isExist()) {
             return false;
         }
@@ -89,7 +98,8 @@ class User extends Model {
         $this->save();
     }
 
-    public function login() {
+    public function login()
+    {
         $sql = "SELECT * FROM users WHERE email = '$this->email'";
         $this->db->runQuery($sql);
         $user = $this->db->getData();
@@ -102,19 +112,21 @@ class User extends Model {
         return false;
     }
 
-    public function logout() {
+    public function logout()
+    {
         unset($_SESSION['user']);
     }
 
-    public function update() {
+    public function update()
+    {
         $data = "first_name = '$this->first_name', last_name = '$this->last_name', phone = '$this->phone', address = '$this->address', city = '$this->city', zip = '$this->zip'";
         $this->db->updateData('users', $data, "email = '$this->email'");
     }
 
-    public function getAll() {
-        $sql = "SELECT * FROM users";
-        $this->db->runQuery($sql);
-        return $this->db->getData();
-    }
+    public function getAll()
+    {
+        $sql = "SELECT id, email, first_name, last_name, phone, address, city, zip, role FROM users";
 
+        return $this->db->runQuery($sql);
+    }
 }

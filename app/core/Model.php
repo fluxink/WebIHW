@@ -1,6 +1,6 @@
 <?php
 
-require 'app/core/Database.php';
+require $_SERVER["DOCUMENT_ROOT"] . '/app/core/Database.php';
 
 abstract class Model {
     protected $db;

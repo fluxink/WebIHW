@@ -1,6 +1,6 @@
 <?php
 
-require_once 'app/core/Model.php';
+require_once $_SERVER["DOCUMENT_ROOT"] . '/app/core/Model.php';
 
 class Item extends Model {
     public $id;
@@ -39,12 +39,17 @@ class Item extends Model {
     public function getPage($page, $limit) {
         $offset = ($page - 1) * $limit;
         $sql = "SELECT items.*, categories.name AS category_name FROM items INNER JOIN categories ON items.category_id = categories.id LIMIT $limit OFFSET $offset";
-        
         return $this->db->runQuery($sql);
     }
 
-    public function getByCategory($category_id) {
-        $sql = "SELECT items.*, categories.name AS category_name FROM items INNER JOIN categories ON items.category_id = categories.id WHERE category_id = '$category_id'";
+    public function getByCategory($category_id, $page=false, $limit=false) {
+        if ($page && $limit) {
+            $offset = ($page - 1) * $limit;
+            $sql = "SELECT items.*, categories.name AS category_name FROM items INNER JOIN categories ON items.category_id = categories.id WHERE category_id = '$category_id' LIMIT $limit OFFSET $offset";
+        } else {
+            $sql = "SELECT items.*, categories.name AS category_name FROM items INNER JOIN categories ON items.category_id = categories.id WHERE category_id = '$category_id'";
+        }
+        
         $this->db->runQuery($sql);
         return $this->db->getData();
     }

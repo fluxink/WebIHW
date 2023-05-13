@@ -128,3 +128,24 @@ img {
     color: var(--primary-hover);
     text-shadow: 0 0 0.5rem #000000;
 }
+
+.error {
+    color: var(--del-color);
+}
+
+.modal {
+    width: 85% !important;
+    max-width: 600px !important;
+}
+
+.admin-grid {
+    display: grid;
+    grid-template-columns: 1fr 3fr 1fr;
+    grid-template-rows: 1fr;
+    grid-column-gap: 0px;
+    grid-row-gap: 0px;
+}
+
+.container-flex {
+    display: flex;
+}

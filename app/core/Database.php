@@ -1,6 +1,6 @@
 <?php
 
-require 'config.php';
+require $_SERVER["DOCUMENT_ROOT"] . '/config.php';
 
 class Database extends mysqli {
     private $connections;
