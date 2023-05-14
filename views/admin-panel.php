@@ -14,13 +14,15 @@ if (!isset($_SESSION['user'])) {
 }
 ?>
 <!DOCTYPE html>
-<html lang="uk">
+<html lang="uk-ua">
 
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="https://unpkg.com/@picocss/pico@1.*/css/pico.min.css">
+    <link href="https://cdn.jsdelivr.net/npm/beercss@3.1.3/dist/cdn/beer.min.css" rel="stylesheet">
+    <script type="module" src="https://cdn.jsdelivr.net/npm/beercss@3.1.3/dist/cdn/beer.min.js"></script>
+    <script type="module" src="https://cdn.jsdelivr.net/npm/material-dynamic-colors@0.1.7/dist/cdn/material-dynamic-colors.min.js"></script>
     <link rel="stylesheet" href="<? echo 'http://127.0.0.1' . '/styles/style.css' ?>">
     <title>Admin panel</title>
 </head>
@@ -39,49 +41,73 @@ if (!isset($_SESSION['user'])) {
         echo '<div class="container-fluid"><div class="alert">' . htmlspecialchars($_GET['message']) . '</div>';
     }
     ?>
-    <nav class="container-fluid">
-        <ul>
-            <li><a href="#"><strong>Stick Shop</strong></a></li>
-        </ul>
-        <ul>
-            <li><strong>Admin panel</strong></li>
-        </ul>
-        <ul>
-            <li>
-                <a href="profile.php">
-                    <svg width="1.5rem" height="1.5rem" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <path d="M12.12 12.78C12.05 12.77 11.96 12.77 11.88 12.78C10.12 12.72 8.71997 11.28 8.71997 9.50998C8.71997 7.69998 10.18 6.22998 12 6.22998C13.81 6.22998 15.28 7.69998 15.28 9.50998C15.27 11.28 13.88 12.72 12.12 12.78Z" stroke="var(--primary)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
-                        <path d="M18.74 19.3801C16.96 21.0101 14.6 22.0001 12 22.0001C9.40001 22.0001 7.04001 21.0101 5.26001 19.3801C5.36001 18.4401 5.96001 17.5201 7.03001 16.8001C9.77001 14.9801 14.25 14.9801 16.97 16.8001C18.04 17.5201 18.64 18.4401 18.74 19.3801Z" stroke="var(--primary)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
-                        <path d="M12 22C17.5228 22 22 17.5228 22 12C22 6.47715 17.5228 2 12 2C6.47715 2 2 6.47715 2 12C2 17.5228 6.47715 22 12 22Z" stroke="var(--primary)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
-                    </svg>
-                </a>
-            </li>
-            <li>
-                <?php
-                if (isset($_SESSION['user'])) {
-                    echo '<a href="logout.php">Вийти</a>';
-                } else {
-                    echo '<button data-target="modal-login" onclick="toggleModal(event)">
-                                Вхід
-                            </button>';
-                }
-                ?>
-            </li>
-        </ul>
-    </nav>
+    <header>
+        <nav>
+            <a href="#"><h5 class="">Stick Shop</h5></a>
+            <h5 class="max center-align">Admin panel</h5>
+            <a href="/profile.php">
+                <i class="extra primary-text">account_circle</i>
+            </a>
+            <?php
+            if (isset($_SESSION['user'])) {
+                echo '<a href="logout.php">
+                        <button>
+                            Вийти
+                        </button>
+                      </a>';
+            } else {
+                echo '<button data-target="modal-login" onclick="toggleModal(event)">
+                                    Вхід
+                                </button>';
+            }
+            ?>
+        </nav>
+    </header>
     <div class="container-flex">
         <aside style="max-width: fit-content;">
             <article>
                 <ul>
                     <li><a href="admin-panel.php?users">Користувачі</a></li>
-                    <li><a href="admin-panel.php?products">Товари</a></li>
+                    <li><a href="admin-panel.php?item">Товари</a></li>
                     <li><a href="admin-panel.php?categories">Категорії</a></li>
                 </ul>
             </article>
-
+            <article>
+                <ul>
+                    <li>
+                        <a href="">Видалити</a>
+                    </li>
+                    <li>
+                        <a href="object.php?item&action=create">Додати</a>
+                    </li>
+                    <li>
+                        <a href="object.php?item&action=update">Редагувати</a>
+                    </li>
+                </ul>
+                <ul>
+                    <li>Кількість елементів</li>
+                    <li><a href="
+                    <?php
+                    $url = $_SERVER['REQUEST_URI'];
+                    // Replace or add param
+                    $url = preg_replace('/&l=[0-9]+/', '', $url);
+                    $url = $url . '&l=5';
+                    echo $url;
+                    ?>
+                    ">5</a></li>
+                    <li><a href="
+                    <?php
+                    $url = $_SERVER['REQUEST_URI'];
+                    $url = preg_replace('/&l=[0-9]+/', '', $url);
+                    $url = $url . '&l=10';
+                    echo $url;
+                    ?>
+                    ">10</a></li>
+                </ul>
+            </article>
         </aside>
         <main class="container">
-            <article>
+            <article class="objects-table">
 
                 <?php
                 if (isset($_GET['users'])) {
@@ -89,7 +115,7 @@ if (!isset($_SESSION['user'])) {
                     $user = new User();
                     $users = $user->getAll();
                     drawTable($users, 'user');
-                } else if (isset($_GET['products'])) {
+                } else if (isset($_GET['item'])) {
                     require $_SERVER["DOCUMENT_ROOT"] . '/app/models/Item.php';
                     $item = new Item();
                     $page = isset($_GET['p']) ? $_GET['p'] : 1;
@@ -108,82 +134,78 @@ if (!isset($_SESSION['user'])) {
                 function drawTable($data, $data_type, $pages = false, $current_page = 1, $limit = 5, $num_pages = 1)
                 {
                     echo '<figure>';
-                    echo '<table role="grid">';
+                    echo '<table class="border">';
                     echo '<thead>';
                     echo '<tr>';
+                    echo '<th>
+                            <label class="checkbox">
+                                <input type="checkbox" onclick="toggle(this)">
+                                <span></span>
+                                <div class="tooltip">Вибрати все</div>
+                            </label>
+                          </th>';
                     foreach ($data->fetch_fields() as $key) {
                         echo '<th>' . $key->name . '</th>';
                     }
-                    echo '<th><input type="checkbox" onclick="toggle(this)"></th>';
                     echo '<th>Дії</th>';
                     echo '</tr>';
                     echo '</thead>';
                     echo '<tbody>';
                     foreach ($data as $row) {
                         echo '<tr>';
+                        echo '<td>
+                                <label class="checkbox">
+                                    <input type="checkbox" name="select" value="' . $row['id'] . '">
+                                    <span></span>
+                                </label>
+                              </td>';
                         foreach ($row as $key => $value) {
                             echo '<td>' . $value . '</td>';
                         }
-                        echo '<td><input type="checkbox" name="select" value="' . $row['id'] . '"></td>';
-                        echo '<td><a href="object.php?' . $data_type . '&action=update&id=' . $row['id'] . '">Редагувати</a>|
-                        <a href="object-action.php?' . $data_type . '&action=delete&id=' . $row['id'] . '">Видалити</a></td>';
+                        echo '<td><nav class="right-aling">
+                            <a href="object.php?' . $data_type . '&action=update&id=' . $row['id'] . '">
+                                <i>edit</i>
+                                <div class="tooltip">Редагувати</div>
+                            </a>
+                            <a href="object-action.php?' . $data_type . '&action=delete&id=' . $row['id'] . '">
+                                <i>delete</i>
+                                <div class="tooltip">Видалити</div>
+                            </a>
+                            </nav></td>';
                         echo '</tr>';
                     }
                     echo '</tbody>';
                     echo '</table>';
                     echo '</figure>';
                     if ($pages) {
-                        echo '<footer>';
+                        $pages_to_show = 5;
+                        $url = $_SERVER['REQUEST_URI'];
+                        $url = preg_replace('/&p=\d+/', '', $url);
                         echo '<div class="pagination">';
-                        echo '<a href="admin-panel.php?products&p=' . ($current_page - 1) . '&l=' . $limit . '">&laquo;</a>';
-                        for ($i = 1; $i <= $num_pages; $i++) {
-                            if ($i == $current_page) {
-                                echo '<a class="active" href="admin-panel.php?products&p=' . $i . '&l=' . $limit . '">' . $i . '</a>';
-                                continue;
-                            }
-                            echo '<a href="admin-panel.php?products&p=' . $i . '&l=' . $limit . '">' . $i . '</a>';
+                        if ($current_page > 1) {
+                            echo '<a href="' . $url . '&p=1">First</a>';
+                            echo '<a href="' . $url . '&p=' . ($current_page - 1) . '">Prev</a>';
                         }
-                        echo '<a href="admin-panel.php?products&p=' . ($current_page + 1) . '&l=' . $limit . '">&raquo;</a>';
+                        $start_page = max(1, $current_page - floor($pages_to_show / 2));
+                        $end_page = min($num_pages, $start_page + $pages_to_show - 1);
+                        for ($i = $start_page; $i <= $end_page; $i++) {
+                            if ($i == $current_page) {
+                                echo '<a class="active">' . $i . '</a>';
+                            } else {
+                                echo '<a href="' . $url . '&p=' . $i . '">' . $i . '</a>';
+                            }
+                        }
+                        if ($current_page < $num_pages) {
+                            echo '<a href="' . $url . '&p=' . ($current_page + 1) . '">Next</a>';
+                            echo '<a href="' . $url . '&p=' . $num_pages . '">Last</a>';
+                        }
                         echo '</div>';
-                        echo '</footer>';
                     }
                 }
                 ?>
             </article>
         </main>
-        <article>
-            <ul>
-                <li>
-                    <a href="">Видалити</a>
-                </li>
-                <li>
-                    <a href="object.php?item&action=create">Додати</a>
-                </li>
-                <li>
-                    <a href="object.php?item&action=update">Редагувати</a>
-                </li>
-            </ul>
-            <ul>
-                <li>Кількість елементів</li>
-                <li><a href="
-                    <?php
-                    $url = $_SERVER['REQUEST_URI'];
-                    // Replace or add param
-                    $url = preg_replace('/&l=[0-9]+/', '', $url);
-                    $url = $url . '&l=5';
-                    echo $url;
-                    ?>
-                    ">5</a></li>
-                <li><a href="
-                    <?php
-                    $url = $_SERVER['REQUEST_URI'];
-                    $url = preg_replace('/&l=[0-9]+/', '', $url);
-                    $url = $url . '&l=10';
-                    echo $url;
-                    ?>
-                    ">10</a></li>
-            </ul>
-        </article>
+
     </div>
 </body>
 

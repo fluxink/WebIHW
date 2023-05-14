@@ -1,43 +1,30 @@
 :root {
-    --primary: #ffb300;
-}
-
-/* Amber Light scheme (Default) */
-/* Can be forced with data-theme="light" */
-[data-theme="light"],
-:root:not([data-theme="dark"]) {
-  --primary: #ffb300;
-  --primary-hover: #ffa000;
-  --primary-focus: rgba(255, 179, 0, 0.125);
-  --primary-inverse: rgba(0, 0, 0, 0.75);
-}
-
-/* Amber Dark scheme (Auto) */
-/* Automatically enabled if user has Dark mode enabled */
-@media only screen and (prefers-color-scheme: dark) {
-  :root:not([data-theme]) {
-    --primary: #ffb300;
-    --primary-hover: #ffc107;
-    --primary-focus: rgba(255, 179, 0, 0.25);
-    --primary-inverse: rgba(0, 0, 0, 0.75);
-  }
-}
-
-/* Amber Dark scheme (Forced) */
-/* Enabled if forced with data-theme="dark" */
-[data-theme="dark"] {
-  --primary: #ffb300;
-  --primary-hover: #ffc107;
-  --primary-focus: rgba(255, 179, 0, 0.25);
-  --primary-inverse: rgba(0, 0, 0, 0.75);
-}
-
-/* Amber (Common styles) */
-:root {
-  --form-element-active-border-color: var(--primary);
-  --form-element-focus-color: var(--primary-focus);
-  --switch-color: var(--primary-inverse);
-  --switch-checked-background-color: var(--primary);
+    --primary: #8c5000;
+    --on-primary: #ffffff;
+    --primary-container: #ffdcbb;
+    --on-primary-container: #2d1600;
+    --secondary: #735a42;
+    --on-secondary: #ffffff;
+    --secondary-container: #fedcbe;
+    --on-secondary-container: #291806;
+    --tertiary: #586339;
+    --on-tertiary: #ffffff;
+    --tertiary-container: #dce8b4;
+    --on-tertiary-container: #161e01;
+    --error: #ba1b1b;
+    --error-container: #ffdad4;
+    --on-error: #ffffff;
+    --on-error-container: #410001;
+    --background: #fcfcfc;
+    --on-background: #1f1b17;
+    --surface: #fcfcfc;
+    --on-surface: #1f1b17;
+    --surface-variant: #f2dfd1;
+    --on-surface-variant: #51453a;
+    --outline: #837569;
+    --inverse-on-surface: #faefe7;
+    --inverse-surface: #352f2a;
+    --inverse-primary: #ffb86d;
 }
 
 img {
@@ -47,7 +34,8 @@ img {
 
 #themes button.theme-switcher:first-of-type {
     --font-weight: bold;
-  }
+}
+
 #themes button.theme-switcher i {
     font-style: normal;
 }
@@ -64,6 +52,7 @@ img {
     line-height: 1;
     text-align: right;
 }
+
 .switcher::after {
     display: inline-block;
     width: 1rem;
@@ -75,6 +64,7 @@ img {
     vertical-align: bottom;
     transition: transform var(--transition);
 }
+
 .switcher i {
     display: inline-block;
     max-width: 0;
@@ -84,24 +74,30 @@ img {
     font-size: 0.875rem;
     white-space: nowrap;
 }
-.switcher:hover, .switcher:focus {
+
+.switcher:hover,
+.switcher:focus {
     max-width: 100%;
     transition: background-color var(--transition), border-color var(--transition), color var(--transition), box-shadow var(--transition);
 }
+
 .switcher:hover::after {
     transform: rotate(180deg);
 }
+
 .switcher:hover i {
     max-width: 100%;
     padding: 0 calc(var(--spacing) / 2) 0 calc(var(--spacing) / 4);
     transition: max-width var(--transition), padding var(--transition);
 }
+
 .switcher:focus {
     box-shadow: var(--card-box-shadow), 0 0 0 0.2rem var(--secondary-focus);
 }
+
 @media (min-width: 576px) {
     .switcher {
-      right: calc(var(--spacing) + var(--scrollbar-width, 0px));
+        right: calc(var(--spacing) + var(--scrollbar-width, 0px));
     }
 }
 
@@ -110,20 +106,24 @@ img {
     display: flex;
     text-align: center;
 }
+
 .category:hover {
     box-shadow: var(--card-box-shadow), 0 0 0 0.2rem var(--secondary-focus);
 }
+
 .category_text {
     position: absolute;
     display: inline;
     top: 5%;
-   
+
 }
+
 .category-button {
     font-size: 1.5rem;
     color: var(--primary);
     text-shadow: 0 0 0.5rem #000000;
 }
+
 .category:hover .category-button {
     color: var(--primary-hover);
     text-shadow: 0 0 0.5rem #000000;
@@ -166,11 +166,15 @@ img {
     background-color: var(--primary);
     transition: background-color var(--transition), color var(--transition);
 }
-.pagination a:hover, .pagination a:focus {
+
+.pagination a:hover,
+.pagination a:focus {
     color: var(--primary-inverse);
     background-color: var(--primary-hover);
 }
+
 .pagination a.active {
     color: var(--primary);
     background-color: var(--primary-inverse);
 }
+
