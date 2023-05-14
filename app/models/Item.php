@@ -2,6 +2,7 @@
 
 require_once $_SERVER["DOCUMENT_ROOT"] . '/app/core/Model.php';
 
+#[AllowDynamicProperties]
 class Item extends Model {
     public $id;
     public $name;
@@ -13,6 +14,45 @@ class Item extends Model {
 
     public function __construct() {
         parent::__construct();
+    }
+
+    public function emptyValues() {
+        $this->id = '';
+        $this->name = '';
+        $this->description = '';
+        $this->price = '';
+        $this->image = '';
+        $this->category_id = '';
+        $this->category_name = '';
+    }
+
+    public function setValuesFromLast() {
+        $item = $this->db->getData();
+        $this->id = $item['id'];
+        $this->name = $item['name'];
+        $this->description = $item['description'];
+        $this->price = $item['price'];
+        $this->image = $item['image'];
+        $this->category_id = $item['category_id'];
+        $this->category_name = $item['category_name'];
+    }
+
+
+    public function validate() {
+        $errors = [];
+        if (empty($this->name)) {
+            $errors['name'] = 'Введіть назву товару';
+        }
+        if (empty($this->description)) {
+            $errors['description'] = 'Введіть опис товару';
+        }
+        if (empty($this->price)) {
+            $errors['price'] = 'Введіть ціну товару';
+        }
+        if (empty($this->category_id)) {
+            $errors['category_id'] = 'Виберіть категорію товару';
+        }
+        return $errors;
     }
 
     public function save() {
@@ -30,6 +70,11 @@ class Item extends Model {
         $this->db->deleteData('items', "id = '$this->id'");
     }
 
+    public function deleteMany($ids) {
+        $ids = implode(',', $ids);
+        $this->db->deleteData('items', "id IN ($ids)");
+    }
+
     public function getAll() {
         $sql = "SELECT items.*, categories.name AS category_name FROM items INNER JOIN categories ON items.category_id = categories.id";
         $this->db->runQuery($sql);
@@ -42,6 +87,13 @@ class Item extends Model {
         return $this->db->runQuery($sql);
     }
 
+    public function getNumPages($limit) {
+        $sql = "SELECT COUNT(*) FROM items";
+        $this->db->runQuery($sql);
+        $num_items = $this->db->getData()['COUNT(*)'];
+        return ceil($num_items / $limit);
+    }
+
     public function getByCategory($category_id, $page=false, $limit=false) {
         if ($page && $limit) {
             $offset = ($page - 1) * $limit;
@@ -52,5 +104,15 @@ class Item extends Model {
         
         $this->db->runQuery($sql);
         return $this->db->getData();
+    }
+
+    public function getById($id) {
+        $sql = "SELECT items.*, categories.name AS category_name FROM items INNER JOIN categories ON items.category_id = categories.id WHERE items.id = '$id'";
+        $this->db->runQuery($sql);
+        $this->setValuesFromLast();
+        if ($this->db->numRows() == 0) {
+            return false;
+        }
+        return true;
     }
 }

@@ -2,6 +2,7 @@
 
 require_once $_SERVER["DOCUMENT_ROOT"] . '/app/core/Model.php';
 
+#[AllowDynamicProperties]
 class Category extends Model {
     public $id;
     public $name;
@@ -34,6 +35,12 @@ class Category extends Model {
     public function getById($id) {
         $sql = "SELECT * FROM categories WHERE id = '$id'";
         $this->db->runQuery($sql);
-        return $this->db->getData();
+        if ($this->db->numRows() == 0) {
+            return false;
+        }
+        foreach ($this->db->getData() as $key => $value) {
+            $this->$key = $value;
+        }
+        return true;
     }
 }
