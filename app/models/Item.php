@@ -84,11 +84,19 @@ class Item extends Model {
     public function getPage($page, $limit) {
         $offset = ($page - 1) * $limit;
         $sql = "SELECT items.*, categories.name AS category_name FROM items INNER JOIN categories ON items.category_id = categories.id LIMIT $limit OFFSET $offset";
-        return $this->db->runQuery($sql);
+        $this->db->runQuery($sql);
+        while ($item = $this->db->getData()) {
+            $items[] = $item;
+        }
+        return $items ?? [];
     }
 
-    public function getNumPages($limit) {
-        $sql = "SELECT COUNT(*) FROM items";
+    public function getNumPages($limit, $category=false) {
+        if ($category) {
+            $sql = "SELECT COUNT(*) FROM items WHERE category_id = '$category'";
+        } else {
+            $sql = "SELECT COUNT(*) FROM items";
+        }
         $this->db->runQuery($sql);
         $num_items = $this->db->getData()['COUNT(*)'];
         return ceil($num_items / $limit);
@@ -101,9 +109,11 @@ class Item extends Model {
         } else {
             $sql = "SELECT items.*, categories.name AS category_name FROM items INNER JOIN categories ON items.category_id = categories.id WHERE category_id = '$category_id'";
         }
-        
         $this->db->runQuery($sql);
-        return $this->db->getData();
+        while ($item = $this->db->getData()) {
+            $items[] = $item;
+        }
+        return $items ?? [];
     }
 
     public function getById($id) {
