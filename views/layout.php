@@ -13,38 +13,41 @@
 </head>
 
 <body>
-    <script src="js/modal.js"></script>
+    <!-- <script src="js/modal.js"></script> -->
     <header class="fixed">
-        <nav class="grid">
-            <a class="s2 left-align" href="/"><img class="round extra" src="assets/logo.png"></a>
-            <h4 class="s8 center-align">Stick Shop</h4>
-            <a class="s1" href="/profile.php">
+        <nav class="">
+            <a class=" left-align" href="/"><img class="round extra" src="assets/logo.png"></a>
+            <div class=""><a href="/"><h4>Stick Shop</h4></a></div>
+            <div class="max"></div>
+            <a class=" right-align" href="/profile.php">
                 <i class="extra primary-text">account_circle</i>
             </a>
             <?php
             if (isset($_SESSION['user'])) {
-                echo '<a class="s1" href="logout.php">
+                echo '<a class="" href="logout.php">
                         <button>
                             Вийти
                         </button>
                       </a>';
             } else {
-                echo '<button class="s1" data-target="modal-login" onclick="toggleModal(event)">
-                                    Вхід
-                                </button>';
+                echo '<a class="" href="login.php">
+                        <button>
+                            Вхід
+                        </button>
+                      </a>';
             }
             ?>
         </nav>
     </header>
     <main class="responsive max">
         <?php if (parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH) == '/') : ?>
-        <article class="no-elevate round no-padding large page bottom active"><img class="responsive" src="https://lh3.googleusercontent.com/7GLFdt-EPWPY2k7WvjHd-LDFITELyr8fAe3vEh80sG26wjcDLt7bnzg70U7Tq2O7j0MOjD1g8sj4J8mFEcEPJv2ml3wwJ9wAEucr-kgPCWVCCGwGADw=w2400-rj">
-            <div class="absolute middle center center-align black-text">
-                <h1 class="center-align">Material Design</h1>
-                <h6>Material 3 is the latest version of Google’s open-source design system. Design and build beautiful, usable products with Material 3.</h6>
-                <nav class="center-align"><button class="round extra">Get started</button></nav>
-            </div>
-        </article>
+            <article class="no-elevate round no-padding large page bottom active"><img class="responsive" src="https://lh3.googleusercontent.com/7GLFdt-EPWPY2k7WvjHd-LDFITELyr8fAe3vEh80sG26wjcDLt7bnzg70U7Tq2O7j0MOjD1g8sj4J8mFEcEPJv2ml3wwJ9wAEucr-kgPCWVCCGwGADw=w2400-rj">
+                <div class="absolute middle center center-align black-text">
+                    <h1 class="center-align">Material Design</h1>
+                    <h6>Material 3 is the latest version of Google’s open-source design system. Design and build beautiful, usable products with Material 3.</h6>
+                    <nav class="center-align"><button class="round extra">Get started</button></nav>
+                </div>
+            </article>
         <?php endif; ?>
         <main class="responsive active">
 
@@ -132,7 +135,7 @@
             <p>Вже маєте акаунт? <a href="#" data-target="modal-registration" onclick="toggleModal(event)">Увійти</a></p>
         </article>
     </dialog>
-    <script src="js/form-valid.js"></script>
+    <!-- <script src="js/form-valid.js"></script> -->
 </body>
 
 </html>

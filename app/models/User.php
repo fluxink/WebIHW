@@ -87,6 +87,7 @@ class User extends Model
         $this->password = password_hash($this->password, PASSWORD_DEFAULT);
         $this->role = 'user';
         $this->save();
+        return true;
     }
 
     public function login()
@@ -123,5 +124,12 @@ class User extends Model
         $sql = "SELECT id, email, first_name, last_name, phone, address, city, zip, role FROM users";
 
         return $this->db->runQuery($sql);
+    }
+
+    public function getByEmail()
+    {
+        $sql = "SELECT * FROM users WHERE email = '$this->email'";
+        $this->db->runQuery($sql);
+        return $this->db->getData();
     }
 }

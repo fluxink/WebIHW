@@ -23,6 +23,11 @@ function template()
     return ob_get_clean();
 }
 
-$content = template('views/profile.php', ['content' => $_SESSION['user']]);
+require_once $_SERVER["DOCUMENT_ROOT"] . '/app/models/User.php';
+
+$user = new User();
+$user->email = $_SESSION['user']['email'];
+
+$content = template('views/profile.php', ['content' => $user->getByEmail()]);
 
 echo template('views/layout.php', ['content' => $content]);

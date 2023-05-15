@@ -133,6 +133,12 @@
                                         <span>Редагувати</span>
                                   </a>';
                         }
+                        if ($content['role'] == 'admin') {
+                            echo '<a class="button" href="/admin.php">
+                                        <i>admin_panel_settings</i>
+                                        <span>Адмін панель</span>
+                                  </a>';
+                        }
                     ?>
                 </div>
                 <div class="medium-space s12"></div>
