@@ -4,21 +4,6 @@ if (isset($_SESSION['user'])) {
     die();
 }
 
-function template()
-{
-    extract(func_get_arg(1));
-
-    ob_start();
-
-    if (file_exists(func_get_arg(0))) {
-        require func_get_arg(0);
-    } else {
-        echo 'Template not found!';
-    }
-
-    return ob_get_clean();
-}
-
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     require_once 'app/models/User.php';
     $email = $_POST['email'];
@@ -44,6 +29,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         }
     }
 }
+
+require_once $_SERVER['DOCUMENT_ROOT'] . '/utils/template.php';
 
 $content = template('views/registration.php', ['error_pass' => $error_pass ?? '', 'email' => $email ?? '', 'error_email' => $error_email ?? '']);
 

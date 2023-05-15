@@ -4,20 +4,6 @@ if (isset($_SESSION['user'])) {
     header('Location: /');
     die();
 }
-function template()
-{
-    extract(func_get_arg(1));
-
-    ob_start();
-
-    if (file_exists(func_get_arg(0))) {
-        require func_get_arg(0);
-    } else {
-        echo 'Template not found!';
-    }
-
-    return ob_get_clean();
-}
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     require_once 'app/models/User.php';
@@ -36,6 +22,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         $error = 'Невірний логін або пароль';
     }
 }
+
+require_once $_SERVER['DOCUMENT_ROOT'] . '/utils/template.php';
 
 $content = template('views/login.php', ['error' => $error ?? '', 'email' => $email ?? '', 'password' => $password ?? '']);
 

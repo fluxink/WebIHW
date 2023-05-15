@@ -8,21 +8,6 @@ if (!isset($_SESSION['user'])) {
     die();
 }
 
-function template()
-{
-    extract(func_get_arg(1));
-
-    ob_start();
-
-    if (file_exists(func_get_arg(0))) {
-        require func_get_arg(0);
-    } else {
-        echo 'Template not found!';
-    }
-
-    return ob_get_clean();
-}
-
 require_once $_SERVER["DOCUMENT_ROOT"] . '/app/models/Item.php';
 
 $page = isset($_GET['page']) ? $_GET['page'] : 1;
@@ -38,6 +23,8 @@ if ($category) {
     $items = $item->getPage($page, $limit);
     $num_pages = $item->getNumPages($limit);
 }
+
+require_once $_SERVER['DOCUMENT_ROOT'] . '/utils/template.php';
 
 $content = template('views/catalog.php', ['items' => $items, 'num_pages'=>$num_pages, 'page' => $page, 'limit' => $limit, 'category' => $category]);
 
