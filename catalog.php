@@ -41,4 +41,4 @@ if ($category) {
 
 $content = template('views/catalog.php', ['items' => $items, 'num_pages'=>$num_pages, 'page' => $page, 'limit' => $limit, 'category' => $category]);
 
-echo template('views/layout.php', ['content' => $content]);
+echo template('views/layout.php', ['content' => $content, 'category' => $category]);

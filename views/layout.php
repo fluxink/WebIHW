@@ -13,7 +13,47 @@
 </head>
 
 <body>
-    <!-- <script src="js/modal.js"></script> -->
+    <!-- Draw nav bar if user on catalog.php page -->
+    <?php
+    if (strpos($_SERVER['REQUEST_URI'], 'catalog.php') !== false) {
+    ?>
+    <nav class="m l left">
+        <a href="/catalog.php">
+            <img class="circle" src="assets/logo.png">
+        </a>
+        <a href="?category=1" class="<?php echo $category == 1 ? 'active' : ''; ?>">
+            <i>bed</i>
+            <span>Спальня</span>
+        </a>
+        <a href="?category=2" class="<?php echo $category == 2 ? 'active' : ''; ?>">
+            <i>chair</i>
+            <span>Вітальня</span>
+        </a>
+        <a href="?category=3" class="<?php echo $category == 3 ? 'active' : ''; ?>">
+            <i>kitchen</i>
+            <span>Кухня</span>
+        </a>
+        <a href="?category=4" class="<?php echo $category == 4 ? 'active' : ''; ?>">
+            <i>bathtub</i>
+            <span>Ванна кімната</span>
+        </a>
+        <a href="?category=5" class="<?php echo $category == 5 ? 'active' : ''; ?>">
+            <i>crib</i>
+            <span>Дитяча кімната</span>
+        </a>
+        <a href="?category=6" class="<?php echo $category == 6 ? 'active' : ''; ?>">
+            <i>apartment</i>
+            <span>Офіс</span>
+        </a>
+        <a href="?category=7" class="<?php echo $category == 7 ? 'active' : ''; ?>">
+            <i>more_horiz</i>
+            <span>Інше</span>
+        </a>
+    </nav>
+    <?php
+    }
+    ?>
+
     <header class="fixed">
         <nav class="">
             <a class=" left-align" href="/"><img class="round extra" src="assets/logo.png"></a>
