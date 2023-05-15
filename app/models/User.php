@@ -32,23 +32,14 @@ class User extends Model
         } else if (!filter_var($this->email, FILTER_VALIDATE_EMAIL)) {
             $this->errors['email'] = 'Email введений некоректно';
         }
-        if (empty($this->password)) {
-            $this->errors['password'] = 'Пароль обов\'язковий';
-        } else if (strlen($this->password) < 8) {
-            $this->errors['password'] = 'Пароль повинен містити не менше 8 символів';
-        }
         if (!empty($this->first_name)) {
             if (strlen($this->first_name) < 2) {
                 $this->errors['first_name'] = 'Ім\'я повинно містити не менше 2 символів';
-            } else if (!preg_match("/^[a-zA-Z ]*$/", $this->first_name)) {
-                $this->errors['first_name'] = 'Ім\'я повинно містити тільки літери та пробіли';
             }
         }
         if (!empty($this->last_name)) {
             if (strlen($this->last_name) < 2) {
                 $this->errors['last_name'] = 'Прізвище повинно містити не менше 2 символів';
-            } else if (!preg_match("/^[a-zA-Z ]*$/", $this->last_name)) {
-                $this->errors['last_name'] = 'Прізвище повинно містити тільки літери та пробіли';
             }
         }
         if (!empty($this->zip)) {
@@ -121,6 +112,10 @@ class User extends Model
     {
         $data = "first_name = '$this->first_name', last_name = '$this->last_name', phone = '$this->phone', address = '$this->address', city = '$this->city', zip = '$this->zip'";
         $this->db->updateData('users', $data, "email = '$this->email'");
+        if ($this->db->numRows() > 0) {
+            return true;
+        }
+        return false;
     }
 
     public function getAll()

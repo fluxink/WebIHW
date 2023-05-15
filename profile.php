@@ -23,6 +23,6 @@ function template()
     return ob_get_clean();
 }
 
-$content = template('views/profile.php', []);
+$content = template('views/profile.php', ['content' => $_SESSION['user']]);
 
 echo template('views/layout.php', ['content' => $content]);

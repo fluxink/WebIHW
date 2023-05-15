@@ -37,6 +37,7 @@
         </nav>
     </header>
     <main class="responsive max">
+        <?php if (parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH) == '/') : ?>
         <article class="no-elevate round no-padding large page bottom active"><img class="responsive" src="https://lh3.googleusercontent.com/7GLFdt-EPWPY2k7WvjHd-LDFITELyr8fAe3vEh80sG26wjcDLt7bnzg70U7Tq2O7j0MOjD1g8sj4J8mFEcEPJv2ml3wwJ9wAEucr-kgPCWVCCGwGADw=w2400-rj">
             <div class="absolute middle center center-align black-text">
                 <h1 class="center-align">Material Design</h1>
@@ -44,6 +45,7 @@
                 <nav class="center-align"><button class="round extra">Get started</button></nav>
             </div>
         </article>
+        <?php endif; ?>
         <main class="responsive active">
 
             <? echo $content; ?>
