@@ -126,3 +126,14 @@ class Item extends Model {
         return true;
     }
 }
+
+function extractItemFromPost($post) {
+    $item = new Item();
+    $item->id = $post['id'] ?? null;
+    $item->name = $post['name'];
+    $item->description = $post['description'];
+    $item->price = $post['price'];
+    $item->image = $post['image'] ?? null;
+    $item->category_id = $post['category'];
+    return $item;
+}

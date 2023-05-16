@@ -13,8 +13,11 @@ class Category extends Model {
 
     public function getAll() {
         $sql = "SELECT * FROM categories";
-
-        return $this->db->runQuery($sql);
+        $this->db->runQuery($sql);
+        while ($row = $this->db->getData()) {
+            $categories[] = $row;
+        }
+        return $categories ?? [];
     }
 
     public function save() {
@@ -43,4 +46,11 @@ class Category extends Model {
         }
         return true;
     }
+}
+
+function extractCategoryFromPost($post) {
+    $category = new Category();
+    $category->id = $post['id'] ?? '';
+    $category->name = $post['name'] ?? '';
+    return $category;
 }

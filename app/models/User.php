@@ -122,8 +122,11 @@ class User extends Model
     public function getAll()
     {
         $sql = "SELECT id, email, first_name, last_name, phone, address, city, zip, role FROM users";
-
-        return $this->db->runQuery($sql);
+        $this->db->runQuery($sql);
+        while ($row = $this->db->getData()) {
+            $users[] = $row;
+        }
+        return $users ?? [];
     }
 
     public function getByEmail()
