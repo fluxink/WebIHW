@@ -178,3 +178,6 @@ img {
     background-color: var(--primary-inverse);
 }
 
+.home-z {
+    z-index: 101 !important;
+}
