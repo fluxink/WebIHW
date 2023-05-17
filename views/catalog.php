@@ -9,8 +9,8 @@
             echo '<img class="responsive" src="/assets/images/' . $image . '" alt="">';
             echo '<div class="absolute bottom left right padding bottom-shadow white-text">';
             echo '<div class="padding left-align">';
-            echo '<h5>' . $item['name'] . '</h5>';
-            echo '<p>' . $item['description'] . '</p>';
+            echo '<h5>' . htmlspecialchars($item['name']) . '</h5>';
+            echo '<p>' . htmlspecialchars($item['description']) . '</p>';
             echo '</div>';
             echo '</div>';
             echo '</a>';

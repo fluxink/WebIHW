@@ -25,10 +25,10 @@
                     <?php
                         if (isset($_GET['edit'])) {
                             echo '<div class="field border medium no-margin">';
-                            echo '<input type="text" name="first_name" value="' . $content['first_name'] . '">';
+                            echo '<input type="text" name="first_name" value="' . htmlspecialchars($content['first_name']) . '">';
                             echo '</div>';
                         } else {
-                            echo '<h6>' . $content['first_name'] . '</h6>';
+                            echo '<h6>' . htmlspecialchars($content['first_name']) . '</h6>';
                         }
                     ?>
                 </div>
@@ -37,10 +37,10 @@
                     <?php
                         if (isset($_GET['edit'])) {
                             echo '<div class="field border medium no-margin">';
-                            echo '<input type="text" name="last_name" value="' . $content['last_name'] . '">';
+                            echo '<input type="text" name="last_name" value="' . htmlspecialchars($content['last_name']) . '">';
                             echo '</div>';
                         } else {
-                            echo '<h6>' . $content['last_name'] . '</h6>';
+                            echo '<h6>' . htmlspecialchars($content['last_name']) . '</h6>';
                         }
                     ?>
                 </div>
@@ -62,10 +62,10 @@
                     <?php
                         if (isset($_GET['edit'])) {
                             echo '<div class="field border medium no-margin">';
-                            echo '<input type="text" name="address" value="' . $content['address'] . '">';
+                            echo '<input type="text" name="address" value="' . htmlspecialchars($content['address']) . '">';
                             echo '</div>';
                         } else {
-                            echo '<h6>' . $content['address'] . '</h6>';
+                            echo '<h6>' . htmlspecialchars($content['address']) . '</h6>';
                         }
                     ?>
                 </div>
@@ -74,10 +74,10 @@
                     <?php
                         if (isset($_GET['edit'])) {
                             echo '<div class="field border medium no-margin">';
-                            echo '<input type="text" name="zip" value="' . $content['zip'] . '">';
+                            echo '<input type="text" name="zip" value="' . htmlspecialchars($content['zip']) . '">';
                             echo '</div>';
                         } else {
-                            echo '<h6>' . $content['zip'] . '</h6>';
+                            echo '<h6>' . htmlspecialchars($content['zip']) . '</h6>';
                         }
                     ?>
                 </div>
@@ -86,10 +86,10 @@
                     <?php
                         if (isset($_GET['edit'])) {
                             echo '<div class="field border medium no-margin">';
-                            echo '<input type="text" name="city" value="' . $content['city'] . '">';
+                            echo '<input type="text" name="city" value="' . htmlspecialchars($content['city']) . '">';
                             echo '</div>';
                         } else {
-                            echo '<h6>' . $content['city'] . '</h6>';
+                            echo '<h6>' . htmlspecialchars($content['city']) . '</h6>';
                         }
                     ?>
                 </div>

@@ -6,10 +6,10 @@
         </div>
         <div class="s12 l6 padding">
             <h3>
-                <?php echo $item->name ?>
+                <?php echo htmlspecialchars($item->name) ?>
             </h3>
             <p class="large-text">
-                <?php echo $item->description ?>
+                <?php echo htmlspecialchars($item->description) ?>
             </p>
             <div class="large-space"></div>
             <div class="s12 l6">
