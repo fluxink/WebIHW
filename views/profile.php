@@ -1,29 +1,3 @@
-<?php
-    if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-        require_once $_SERVER["DOCUMENT_ROOT"] . '/app/models/User.php';
-
-        $user = new User();
-        foreach ($_POST as $key => $value) {
-            $user->$key = $value;
-        }
-        var_dump($_POST);
-        $errors = $user->validate();
-        if (empty($errors)) {
-            if ($user->update()) {
-                $_SESSION['user'] = $user;
-            }
-            header('Location: /profile.php');
-
-        } else {
-            $data['errors'] = $errors;
-            http_response_code(422);
-            header('Content-Type: application/json');
-            echo json_encode($data);
-            exit();
-        }
-    }
-?>
-
 <div class="center-align">
     <div class="large-space"></div>
     <h3 class="bold page top active">Особисті дані</h3>
@@ -39,7 +13,7 @@
                     <?php
                         if (isset($_GET['edit'])) {
                             echo '<div class="field border medium no-margin">';
-                            echo '<input type="email" name="email" value="' . $content['email'] . '">';
+                            echo '<input type="email" name="email" value="' . $content['email'] . '" required>';
                             echo '</div>';
                         } else {
                             echo '<h6>' . $content['email'] . '</h6>';

@@ -7,6 +7,7 @@ if (!isset($_SESSION)) {
 
 require_once $_SERVER["DOCUMENT_ROOT"] . '/app/core/Model.php';
 
+#[AllowDynamicProperties]
 class User extends Model
 {
     public $email;
@@ -50,7 +51,8 @@ class User extends Model
         if (!empty($this->phone)) {
             if (!preg_match("/^[0-9]*$/", $this->phone)) {
                 $this->errors['phone'] = 'Телефон повинен містити тільки цифри';
-            } else if (strlen($this->phone) == 10) {
+            }
+            if (strlen($this->phone) != 10) {
                 $this->errors['phone'] = 'Телефон повинен містити 10 цифр';
             }
         }
@@ -113,7 +115,7 @@ class User extends Model
     {
         $data = "first_name = '$this->first_name', last_name = '$this->last_name', phone = '$this->phone', address = '$this->address', city = '$this->city', zip = '$this->zip'";
         $this->db->updateData('users', $data, "email = '$this->email'");
-        if ($this->db->numRows() > 0) {
+        if ($this->db->last) {
             return true;
         }
         return false;
