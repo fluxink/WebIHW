@@ -39,9 +39,10 @@ $sql = "CREATE TABLE IF NOT EXISTS `users` (
         ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=1;
 
         INSERT INTO `users` (`email`, `password`, `role`) VALUES
-        ('admin@gmail.com', '$2y$10$whViDQ/7ueISw5YLvgqbP.dFWsghApmH2CTwokCp182UrTtAdwbBm', 'admin');";
+        ('admin@gmail.com', '$2y$10\$whViDQ/7ueISw5YLvgqbP.dFWsghApmH2CTwokCp182UrTtAdwbBm', 'admin') ON DUPLICATE KEY UPDATE password=password;
+        ";
 
-if (mysqli_query($conn, $sql)) {
+if (mysqli_multi_query($conn, $sql)) {
     echo "All tables successfully created <br>";
 } else {
     echo "Error creating tables: " . mysqli_error($conn) . "<br>";
@@ -55,6 +56,11 @@ $sql = "INSERT INTO `categories` (`name`) VALUES
     ('Дитяча кімната'),
     ('Офіс'),
     ('Інше');";
+
+// Free up any pending result sets
+while (mysqli_more_results($conn)) {
+    mysqli_next_result($conn);
+}
 
 if (mysqli_query($conn, $sql)) {
     echo "Table categories filled successfully <br>";
