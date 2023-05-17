@@ -18,7 +18,39 @@
     <!-- Draw nav bar if user on catalog.php page -->
     <?php
     if ((strpos($_SERVER['REQUEST_URI'], 'catalog.php') !== false) || (strpos($_SERVER['REQUEST_URI'], 'item.php') !== false)) {
-    ?>
+        $bedroom_id = '';
+        $living_room_id = '';
+        $kitchen_id = '';
+        $bathroom_id = '';
+        $kids_room_id = '';
+        $office_id = '';
+        $other_id = '';
+        foreach ($categories as $category_db) {
+            switch ($category_db['name']) {
+                case 'Спальня':
+                    $bedroom_id = $category_db['id'];
+                    break;
+                case 'Вітальня':
+                    $living_room_id = $category_db['id'];
+                    break;
+                case 'Кухня':
+                    $kitchen_id = $category_db['id'];
+                    break;
+                case 'Ванна кімната':
+                    $bathroom_id = $category_db['id'];
+                    break;
+                case 'Дитяча кімната':
+                    $kids_room_id = $category_db['id'];
+                    break;
+                case 'Офіс':
+                    $office_id = $category_db['id'];
+                    break;
+                case 'Інше':
+                    $other_id = $category_db['id'];
+                    break;
+            }
+        }
+        ?>
         <nav class="m l left">
             <a class="no-padding" href="/catalog.php">
                 <img class="round large" src="assets/logo.png">
@@ -27,31 +59,31 @@
                 <i>apps</i>
                 <span>Все</span>
             </a>
-            <a href="?category=1" class="<?php echo $category == 1 ? 'active' : ''; ?>">
+            <a href="?category=<?php echo $bedroom_id ?>" class="<?php echo $category == $bedroom_id ? 'active' : ''; ?>">
                 <i>bed</i>
                 <span>Спальня</span>
             </a>
-            <a href="?category=2" class="<?php echo $category == 2 ? 'active' : ''; ?>">
+            <a href="?category=<?php echo $living_room_id ?>" class="<?php echo $category == $living_room_id ? 'active' : ''; ?>">
                 <i>chair</i>
                 <span>Вітальня</span>
             </a>
-            <a href="?category=3" class="<?php echo $category == 3 ? 'active' : ''; ?>">
+            <a href="?category=<?php echo $kitchen_id ?>" class="<?php echo $category == $kitchen_id ? 'active' : ''; ?>">
                 <i>kitchen</i>
                 <span>Кухня</span>
             </a>
-            <a href="?category=4" class="<?php echo $category == 4 ? 'active' : ''; ?>">
+            <a href="?category=<?php echo $bathroom_id ?>" class="<?php echo $category == $bathroom_id ? 'active' : ''; ?>">
                 <i>bathtub</i>
                 <span>Ванна кімната</span>
             </a>
-            <a href="?category=5" class="<?php echo $category == 5 ? 'active' : ''; ?>">
+            <a href="?category=<?php echo $kids_room_id ?>" class="<?php echo $category == $kids_room_id ? 'active' : ''; ?>">
                 <i>crib</i>
                 <span>Дитяча кімната</span>
             </a>
-            <a href="?category=6" class="<?php echo $category == 6 ? 'active' : ''; ?>">
+            <a href="?category=<?php echo $office_id ?>" class="<?php echo $category == $office_id ? 'active' : ''; ?>">
                 <i>apartment</i>
                 <span>Офіс</span>
             </a>
-            <a href="?category=7" class="<?php echo $category == 7 ? 'active' : ''; ?>">
+            <a href="?category=<?php echo $other_id ?>" class="<?php echo $category == $other_id ? 'active' : ''; ?>">
                 <i>more_horiz</i>
                 <span>Інше</span>
             </a>

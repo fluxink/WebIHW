@@ -25,7 +25,10 @@ if ($category) {
 }
 
 require_once $_SERVER['DOCUMENT_ROOT'] . '/utils/template.php';
+require_once $_SERVER['DOCUMENT_ROOT'] . '/app/models/Category.php';
+
+$category_obj = new Category();
 
 $content = template('views/catalog.php', ['items' => $items, 'num_pages'=>$num_pages, 'page' => $page, 'limit' => $limit, 'category' => $category]);
 
-echo template('views/layout.php', ['content' => $content, 'category' => $category]);
+echo template('views/layout.php', ['content' => $content, 'category' => $category, 'categories' => $category_obj->getAll()]);
