@@ -26,7 +26,7 @@ class Item extends Model {
         $this->category_name = '';
     }
 
-    public function setValuesFromLast() {
+    protected function setValuesFromLast() {
         $item = $this->db->getData();
         $this->id = $item['id'];
         $this->name = $item['name'];

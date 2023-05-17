@@ -17,7 +17,7 @@
 <body>
     <!-- Draw nav bar if user on catalog.php page -->
     <?php
-    if (strpos($_SERVER['REQUEST_URI'], 'catalog.php') !== false) {
+    if ((strpos($_SERVER['REQUEST_URI'], 'catalog.php') !== false) || (strpos($_SERVER['REQUEST_URI'], 'item.php') !== false)) {
     ?>
         <nav class="m l left">
             <a class="no-padding" href="/catalog.php">
