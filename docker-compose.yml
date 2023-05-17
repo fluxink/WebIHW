@@ -14,8 +14,6 @@ services:
     container_name: mysql_sticky
     image: mysql:latest
     restart: always
-    volumes:
-      - ./database/setup.sql:/docker-entrypoint-initdb.d/setup.sql
     environment:
       MYSQL_ROOT_PASSWORD: root
       MYSQL_DATABASE: database
