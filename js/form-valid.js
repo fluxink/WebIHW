@@ -5,6 +5,7 @@ function handleFormSubmit(event) {
     const url = form.action;
     const method = form.method;
     const data = getFormData(form);
+    console.log("Пук");
 
     if (!data) {
         return;
@@ -15,11 +16,12 @@ function handleFormSubmit(event) {
     xhr.setRequestHeader("Content-Type", "application/json");
     xhr.onreadystatechange = function () {
         if (xhr.readyState === XMLHttpRequest.DONE) {
-            if (xhr.status === 200) {
+            if (xhr.status < 400) {
                 // successful response, redirect to new page
                 const location = xhr.getResponseHeader("Location");
                 if (location) {
                     window.location.replace(location);
+                    return false;
                 }
             } else {
                 // error response, display error message to user
@@ -83,5 +85,5 @@ function getFormData(form) {
 
 const forms = document.querySelectorAll("form");
 forms.forEach(function (form) {
-    form.addEventListener("submit", handleFormSubmit);
+    form.addEventListener("submit", handleFormSubmit, false);
 });
