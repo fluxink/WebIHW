@@ -21,7 +21,6 @@ $item = new Item();
 if ($item->getById($_GET['id'])) {
     $content = template('views/item-page.php', ['item' => $item]);
 } else {
-    // Set status code 404 Not Found
     http_response_code(404);
     die();
 }

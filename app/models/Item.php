@@ -117,6 +117,7 @@ class Item extends Model {
     }
 
     public function getById($id) {
+        $id = mysqli_real_escape_string($this->db->getLink(), $id);
         $sql = "SELECT items.*, categories.name AS category_name FROM items INNER JOIN categories ON items.category_id = categories.id WHERE items.id = '$id'";
         $this->db->runQuery($sql);
         $this->setValuesFromLast();

@@ -57,4 +57,8 @@ class Database extends mysqli {
     public function __destruct() {
         $this->connections->close();
     }
+
+    public function getLink() {
+        return $this->connections;
+    }
 }
