@@ -31,7 +31,10 @@ function drawTable($data, $data_type) {
         foreach ($row as $key => $value) {
             if ($key == 'image') {
                 echo '<td><a class="link" href="/assets/images/' . $value . '" target="_blank">' . $value . '</a></td>';
-            } else {
+            } else if ($key == 'id' && $data_type == 'items') {
+                echo '<td><a class="link" href="/item.php?id=' . $value . '" target="_blank">' . $value . '</a></td>';
+            }
+            else {
                 echo '<td>' . htmlspecialchars($value ?? '') . '</td>';
             }
         }
