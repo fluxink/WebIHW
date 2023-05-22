@@ -57,7 +57,7 @@ class User extends Model
             }
         }
         if (!empty($this->city)) {
-            if (!preg_match("/^[a-zA-Z ]*$/", $this->city)) {
+            if (!preg_match("/^[a-zA-Z \p{Cyrillic}]*$/u", $this->city)) {
                 $this->errors['city'] = 'Місто повинно містити тільки літери та пробіли';
             }
         }
