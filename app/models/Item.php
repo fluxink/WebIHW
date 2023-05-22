@@ -81,9 +81,23 @@ class Item extends Model {
         return $this->db->getData();
     }
 
-    public function getPage($page, $limit) {
+    public function getPage(int $page, int $limit, string $sort, $ascending=false, $category=false) {
+        $sort = mysqli_real_escape_string($this->db->getLink(), $sort);
+        $ascending = $ascending ? 'ASC' : 'DESC';
+        $category = $category ? mysqli_real_escape_string($this->db->getLink(), $category) : false;
+
+        $sql = "SELECT items.*, categories.name AS category_name FROM items INNER JOIN categories ON items.category_id = categories.id ";
+
+        if ($category) {
+            $sql .= "WHERE category_id = '$category'";
+        }
+        $sql .= " ORDER BY $sort";
+
+        $sql .= " $ascending";
+
         $offset = ($page - 1) * $limit;
-        $sql = "SELECT items.*, categories.name AS category_name FROM items INNER JOIN categories ON items.category_id = categories.id LIMIT $limit OFFSET $offset";
+        $sql .= " LIMIT $limit OFFSET $offset";
+
         $this->db->runQuery($sql);
         while ($item = $this->db->getData()) {
             $items[] = $item;
@@ -92,6 +106,8 @@ class Item extends Model {
     }
 
     public function getNumPages($limit, $category=false) {
+        $limit = mysqli_real_escape_string($this->db->getLink(), $limit);
+        $category = $category ? mysqli_real_escape_string($this->db->getLink(), $category) : false;
         if ($category) {
             $sql = "SELECT COUNT(*) FROM items WHERE category_id = '$category'";
         } else {
@@ -120,10 +136,10 @@ class Item extends Model {
         $id = mysqli_real_escape_string($this->db->getLink(), $id);
         $sql = "SELECT items.*, categories.name AS category_name FROM items INNER JOIN categories ON items.category_id = categories.id WHERE items.id = '$id'";
         $this->db->runQuery($sql);
-        $this->setValuesFromLast();
         if ($this->db->numRows() == 0) {
             return false;
         }
+        $this->setValuesFromLast();
         return true;
     }
 }

@@ -37,6 +37,7 @@ class Category extends Model {
     }
 
     public function getById($id) {
+        $id = mysqli_real_escape_string($this->db->getLink(), $id);
         $sql = "SELECT * FROM categories WHERE id = '$id'";
         $this->db->runQuery($sql);
         if ($this->db->numRows() == 0) {

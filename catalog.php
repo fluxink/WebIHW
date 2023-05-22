@@ -10,19 +10,27 @@ if (!isset($_SESSION['user'])) {
 
 require_once $_SERVER["DOCUMENT_ROOT"] . '/app/models/Item.php';
 
-$page = isset($_GET['page']) ? $_GET['page'] : 1;
-$limit = isset($_GET['limit']) ? $_GET['limit'] : 6;
-$category = isset($_GET['category']) ? $_GET['category'] : false;
+$page = !empty($_GET['page']) ? $_GET['page'] : 1;
+$limit = !empty($_GET['limit']) ? $_GET['limit'] : 6;
+$category = !empty($_GET['category']) ? $_GET['category'] : false;
+$sort = !empty($_GET['sort']) ? $_GET['sort'] : 'id';
+$asc = isset($_GET['asc']) ? $_GET['asc'] : true;
 
 $item = new Item();
 
-if ($category) {
-    $items = $item->getByCategory($category, $page, $limit);
-    $num_pages = $item->getNumPages($limit, $category);
-} else {
-    $items = $item->getPage($page, $limit);
-    $num_pages = $item->getNumPages($limit);
+try {
+    if ($category) {
+        $items = $item->getPage($page, $limit, $sort, $asc, $category);
+        $num_pages = $item->getNumPages($limit, $category);
+    } else {
+        $items = $item->getPage($page, $limit, $sort, $asc);
+        $num_pages = $item->getNumPages($limit);
+    }
+} catch (Exception $e) {
+    echo $e->getMessage();
+    die();
 }
+
 
 require_once $_SERVER['DOCUMENT_ROOT'] . '/utils/template.php';
 require_once $_SERVER['DOCUMENT_ROOT'] . '/app/models/Category.php';

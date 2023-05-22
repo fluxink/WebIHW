@@ -27,20 +27,64 @@
             </a>
             <?php
             foreach ($categories as $category_db) { ?>
-                <a href="?category=<?php echo $category_db['id']; ?>" class="<?php echo $category == $category_db['id'] ? 'active' : ''; ?>">
+                <a href="?category=<?php echo $category_db['id']; ?>" class="<?php echo checkUrlParameter('category', $category_db['id']) ? 'active' : ''; ?>">
                     <i><?php echo $category_db['icon']; ?></i>
                     <span><?php echo $category_db['name']; ?></span>
                 </a>
             <?php
             }
             ?>
+            <?php if (strpos($_SERVER['REQUEST_URI'], 'catalog.php') == true) { ?>
+                <a data-ui="#modal-sort">
+                    <i class="primary-text">sort</i>
+                    <span>Сортування</span>
+                </a>
+            <?php } ?>
         </nav>
+        <div class="modal left" id="modal-sort" style="z-index: 120; width: 20% !important">
+            <header>
+                <nav>
+                    <button class="transparent circle large" data-ui="#modal-sort">
+                        <i>close</i>
+                    </button>
+                    <h5 class="max bold">Сортування</h5>
+                </nav>
+            </header>
+            <div class="small-divider"></div>
+            <div class="">
+                <div class="row margin">
+                    <a href="<?php echo appendUrlParameter('asc', 0); ?>" class="tiny-padding round <?php echo checkUrlParameter('asc', 0) ? 'fill' : ''; ?>">
+                        <i>arrow_downward</i>
+                        <span>За спаданням</span>
+                    </a>
+                    <a href="<?php echo removeUrlParameter('asc'); ?>" class="tiny-padding round <?php echo !checkUrlParameter('asc') ? 'fill' : ''; ?>">
+                        <i>arrow_upward</i>
+                        <span>За зростанням</span>
+                    </a>
+                </div>
+                <a class="row margin round tiny-padding <?php echo checkUrlParameter('sort', 'id') ? 'fill' : ''; ?>" href="<?php echo appendUrlParameter('sort', 'id'); ?>">
+                    <i>sort</i>
+                    <span>За замовчуванням</span>
+                </a>
+                <a class="row margin round tiny-padding <?php echo checkUrlParameter('sort', 'price') ? 'fill' : ''; ?>" href="<?php echo appendUrlParameter('sort', 'price'); ?>">
+                    <i>euro</i>
+                    <span>За ціною</span>
+                </a>
+                <a class="row margin round tiny-padding <?php echo checkUrlParameter('sort', 'name') ? 'fill' : ''; ?>" href="<?php echo appendUrlParameter('sort', 'name'); ?>">
+                    <i>sort_by_alpha</i>
+                    <span>За назвою</span>
+                </a>
+            </div>
+        </div>
+
+        <!-- Mobile nav bar -->
+
         <nav class="s bottom">
             <a data-ui="#modal-navigation-drawer">
                 <i class="primary-text">menu</i>
             </a>
             <div class="max"></div>
-            <a href="#">
+            <a data-ui="#modal-sort-mobile">
                 <i class="primary-text" style="transform: scale(-1, 1);">sort</i>
             </a>
         </nav>
@@ -78,6 +122,44 @@
                 <i class="error-text">logout</i>
                 <span>Вийти</span>
             </a>
+        </div>
+
+        <!-- Mobile sort modal -->
+
+        <div class="modal right" id="modal-sort-mobile" style="z-index: 120;">
+            <header class="fixed">
+                <nav>
+                    <button class="transparent circle large" data-ui="#modal-sort-mobile">
+                        <i>close</i>
+                    </button>
+                    <h5 class="max bold">Сортування</h5>
+                </nav>
+            </header>
+            <div class="small-divider"></div>
+            <div class="">
+                <div class="row margin">
+                    <a href="<?php echo appendUrlParameter('asc', 0); ?>" class="tiny-padding round <?php echo checkUrlParameter('asc', 0) ? 'fill' : ''; ?>">
+                        <i>arrow_downward</i>
+                        <span>За спаданням</span>
+                    </a>
+                    <a href="<?php echo removeUrlParameter('asc'); ?>" class="tiny-padding round <?php echo !checkUrlParameter('asc') ? 'fill' : ''; ?>">
+                        <i>arrow_upward</i>
+                        <span>За зростанням</span>
+                    </a>
+                </div>
+                <a class="row margin round tiny-padding <?php echo checkUrlParameter('sort', 'id') ? 'fill' : ''; ?>" href="<?php echo appendUrlParameter('sort', 'id'); ?>">
+                    <i>sort</i>
+                    <span>За замовчуванням</span>
+                </a>
+                <a class="row margin round tiny-padding <?php echo checkUrlParameter('sort', 'price') ? 'fill' : ''; ?>" href="<?php echo appendUrlParameter('sort', 'price'); ?>">
+                    <i>euro</i>
+                    <span>За ціною</span>
+                </a>
+                <a class="row margin round tiny-padding <?php echo checkUrlParameter('sort', 'name') ? 'fill' : ''; ?>" href="<?php echo appendUrlParameter('sort', 'name'); ?>">
+                    <i>sort_by_alpha</i>
+                    <span>За назвою</span>
+                </a>
+            </div>
         </div>
     <?php
     }
@@ -186,3 +268,36 @@
 </body>
 
 </html>
+<?php
+
+function appendUrlParameter($parameter, $value)
+{
+    $url = $_SERVER['REQUEST_URI'];
+    $url_data = parse_url($url);
+    parse_str($url_data['query'] ?? '', $params);
+    $params[$parameter] = $value;
+    $url_data['query'] = http_build_query($params);
+    return $url_data['path'] . '?' . $url_data['query'];
+}
+
+function removeUrlParameter($parameter)
+{
+    $url = $_SERVER['REQUEST_URI'];
+    $url_data = parse_url($url);
+    parse_str($url_data['query'] ?? '', $params);
+    unset($params[$parameter]);
+    $url_data['query'] = http_build_query($params);
+    return $url_data['path'] . '?' . $url_data['query'];
+}
+
+function checkUrlParameter($parameter, $value = false)
+{
+    $url = $_SERVER['REQUEST_URI'];
+    $url_data = parse_url($url);
+    parse_str($url_data['query'] ?? '', $params);
+    if ($value) {
+        return isset($params[$parameter]) && $params[$parameter] == $value;
+    } else {
+        return isset($params[$parameter]);
+    }
+}

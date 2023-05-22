@@ -19,7 +19,7 @@ if (isset($_GET['items'])) {
     require_once $_SERVER["DOCUMENT_ROOT"] . '/app/models/Item.php';
     $table_name = 'items';
     $item = new Item();
-    $data = $item->getPage($page, $limit);
+    $data = $item->getPage($page, $limit, 'id');
     $num_pages = $item->getNumPages($limit);
 } elseif (isset($_GET['users'])) {
     require_once $_SERVER["DOCUMENT_ROOT"] . '/app/models/User.php';
