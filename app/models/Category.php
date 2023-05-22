@@ -47,6 +47,12 @@ class Category extends Model {
         }
         return true;
     }
+
+    public function isHaveItems() {
+        $sql = "SELECT * FROM items WHERE category_id = '$this->id'";
+        $this->db->runQuery($sql);
+        return $this->db->numRows() > 0;
+    }
 }
 
 function extractCategoryFromPost($post) {

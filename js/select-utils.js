@@ -33,7 +33,8 @@ let deleteButtons = document.querySelectorAll('a[object_type][object_id]');
 deleteButtons.forEach(function(button) {
   button.addEventListener('click', function() {
     let xhr = new XMLHttpRequest();
-    xhr.open('POST', '/object.php');
+    let url = '/object.php' + '?' + deleteButtons[0].getAttribute('object_type');
+    xhr.open('POST', url);
     xhr.setRequestHeader('Content-Type', 'application/json');
     let data = JSON.stringify({ ids: [button.getAttribute('object_id')], action: 'delete'});
     xhr.send(data);

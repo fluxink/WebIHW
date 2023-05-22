@@ -32,7 +32,7 @@ function drawTable($data, $data_type) {
             if ($key == 'image') {
                 echo '<td><a class="link" href="/assets/images/' . $value . '" target="_blank">' . $value . '</a></td>';
             } else {
-                echo '<td>' . htmlspecialchars($value) . '</td>';
+                echo '<td>' . htmlspecialchars($value ?? '') . '</td>';
             }
         }
         if ($data_type != 'users') {

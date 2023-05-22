@@ -41,20 +41,42 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
 } else if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $message = '';
     if ($_SERVER['CONTENT_TYPE'] == 'application/json') {
-        require_once $_SERVER["DOCUMENT_ROOT"] . '/app/models/Item.php';
-        $item = new Item();
-        $json = json_decode(file_get_contents('php://input'), true);
-        if ($json['action'] == 'delete') {
-            $delted_ids = '';
-            foreach ($json['ids'] as $id) {
-                if ($item->getById($id)) {
-                    $item->delete();
-                    $delted_ids .= "$id,";
+        if (isset($_GET['items'])) {
+            require_once $_SERVER["DOCUMENT_ROOT"] . '/app/models/Item.php';
+            $item = new Item();
+            $json = json_decode(file_get_contents('php://input'), true);
+            if ($json['action'] == 'delete') {
+                $delted_ids = '';
+                foreach ($json['ids'] as $id) {
+                    if ($item->getById($id)) {
+                        $item->delete();
+                        $delted_ids .= "$id,";
+                    }
+                    $message = "Товар №($delted_ids) успішно видалено";
                 }
-                $message = "Товар №($delted_ids) успішно видалено";
+            } else {
+                $message = 'Невідома дія';
             }
-        } else {
-            $message = 'Невідома дія';
+        } else if (isset($_GET['category'])) {
+            require_once $_SERVER["DOCUMENT_ROOT"] . '/app/models/Category.php';
+            $category = new Category();
+            $json = json_decode(file_get_contents('php://input'), true);
+            if ($json['action'] == 'delete') {
+                $delted_ids = '';
+                foreach ($json['ids'] as $id) {
+                    if ($category->getById($id)) {
+                        if ($category->isHaveItems()) {
+                            $message = "Категорія №($id) має товари";
+                            break;
+                        }
+                        $category->delete();
+                        $delted_ids .= "$id,";
+                        $message = "Категорію №($delted_ids) успішно видалено";
+                    }
+                }
+            } else {
+                $message = 'Невідома дія';
+            }
         }
         header("Content-Type: application/json");
     } else if (isset($_GET['items'])) {
@@ -89,7 +111,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
     } else if (isset($_GET['category'])) {
         require_once $_SERVER["DOCUMENT_ROOT"] . '/app/models/Category.php';
         $category = new Category();
-        if (isset($_POST['id'])) {
+        if (!empty($_POST['id'])) {
             if ($category->getById($_POST['id'])) {
                 $category->name = $_POST['name'];
                 $category->icon = $_POST['icon'];
