@@ -76,8 +76,12 @@ $url = $_SERVER['PHP_SELF'] . '?' . $url;
                 echo '<div class="medium-space"></div>';
                 drawPagination($url, $page, $limit, $num_pages);
             }
-        }
+        } else {
         ?>
+            <div class="large-space"></div>
+            <h3 class="bold page active top">Виберіть таблицю</h3>
+            <div class="large-space"></div>
+        <?php } ?>
         <div class="medium-space"></div>
     </article>
 </div>

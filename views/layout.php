@@ -177,7 +177,7 @@
             <div class="s"><a href="/">
                     <h4 class="bold">Stick Shop</h4>
                 </a></div>
-
+            <div class="s space"></div>
             <?php
             if (isset($_SESSION['user'])) {
                 echo '<a class="m l right-align" href="/profile.php">
