@@ -1,5 +1,4 @@
 <!DOCTYPE html>
-<html lang="uk">
 
 <head>
     <meta charset="UTF-8">
@@ -50,7 +49,7 @@
                     break;
             }
         }
-        ?>
+    ?>
         <nav class="m l left">
             <a class="no-padding" href="/catalog.php">
                 <img class="round large" src="assets/logo.png">
@@ -88,31 +87,98 @@
                 <span>Інше</span>
             </a>
         </nav>
+        <nav class="s bottom">
+            <a data-ui="#modal-navigation-drawer">
+                <i class="primary-text">menu</i>
+            </a>
+            <div class="max"></div>
+            <a href="#">
+                <i class="primary-text" style="transform: scale(-1, 1);">sort</i>
+            </a>
+        </nav>
+        <div class="modal left" id="modal-navigation-drawer" style="z-index: 120;">
+            <header class="fixed">
+                <nav>
+                    <button class="transparent circle large" data-ui="#modal-navigation-drawer">
+                        <i>close</i>
+                    </button>
+                    <h5 class="max bold">Stick Shop</h5>
+                </nav>
+            </header>
+            <div class="small-divider"></div>
+            <div class="row">Категорії</div>
+            <a href="/catalog.php" class="row round <?php echo empty($category) ? 'active' : ''; ?>">
+                <i>apps</i>
+                <span>Все</span>
+            </a>
+            <a href="?category=<?php echo $bedroom_id ?>" class="row round <?php echo $category == $bedroom_id ? 'active' : ''; ?>">
+                <i>bed</i>
+                <span>Спальня</span>
+            </a>
+            <a href="?category=<?php echo $living_room_id ?>" class="row round <?php echo $category == $living_room_id ? 'active' : ''; ?>">
+                <i>chair</i>
+                <span>Вітальня</span>
+            </a>
+            <a href="?category=<?php echo $kitchen_id ?>" class="row round <?php echo $category == $kitchen_id ? 'active' : ''; ?>">
+                <i>kitchen</i>
+                <span>Кухня</span>
+            </a>
+            <a href="?category=<?php echo $bathroom_id ?>" class="row round <?php echo $category == $bathroom_id ? 'active' : ''; ?>">
+                <i>bathtub</i>
+                <span>Ванна кімната</span>
+            </a>
+            <a href="?category=<?php echo $kids_room_id ?>" class="row round <?php echo $category == $kids_room_id ? 'active' : ''; ?>">
+                <i>crib</i>
+                <span>Дитяча кімната</span>
+            </a>
+            <a href="?category=<?php echo $office_id ?>" class="row round <?php echo $category == $office_id ? 'active' : ''; ?>">
+                <i>apartment</i>
+                <span>Офіс</span>
+            </a>
+            <a href="?category=<?php echo $other_id ?>" class="row round <?php echo $category == $other_id ? 'active' : ''; ?>">
+                <i>more_horiz</i>
+                <span>Інше</span>
+            </a>
+            <div class="max"></div>
+            <div class="small-divider"></div>
+            <a class="row round" href="/profile.php">
+                <i class="primary-text">account_circle</i>
+                <span>Профіль</span>
+            </a>
+            <a class="row round" href="logout.php">
+                <i class="error-text">logout</i>
+                <span>Вийти</span>
+            </a>
+        </div>
     <?php
     }
     ?>
 
     <header class="fixed" style="z-index: 110;">
-        <nav class="">
-            <a class=" left-align" href="/"><img class="round large" src="assets/logo.png"></a>
-            <div class=""><a href="/">
+        <nav class="row">
+            <a class="" href="/"><img class="round large" src="assets/logo.png"></a>
+            <div class="m l"><a href="/">
                     <h4 class="bold">Stick Shop</h4>
                 </a></div>
-            <div class="max"></div>
-            
+            <div class="m l max"></div>
+            <div class="large-space s"></div>
+            <div class="s"><a href="/">
+                <h4 class="bold">Stick Shop</h4>
+            </a></div>
+
             <?php
             if (isset($_SESSION['user'])) {
-                echo '<a class=" right-align" href="/profile.php">
+                echo '<a class="m l right-align" href="/profile.php">
                         <i class="extra primary-text">account_circle</i>
                       </a>';
-                echo '<a class="" href="logout.php">
-                        <button>
+                echo '<a class="m l" href="logout.php">
+                        <button class="no-margin small-padding">
                             Вийти
                         </button>
                       </a>';
             } else {
                 echo '<a class="" href="login.php">
-                        <button>
+                        <button class="no-margin small-padding">
                             Вхід
                         </button>
                       </a>';
@@ -134,7 +200,7 @@
                 <img class="responsive" src="/assets/home4.jpg">
             </article>
         <?php endif; ?>
-        <main class="responsive active">
+        <main class="responsive">
 
             <? echo $content; ?>
             <div class="large-space"></div>
@@ -186,6 +252,7 @@
 
             <?php } ?>
         </main>
+
     </main>
 </body>
 

@@ -14,9 +14,11 @@ if (!isset($_GET['id'])) {
 }
 
 require_once $_SERVER["DOCUMENT_ROOT"] . '/app/models/Item.php';
+require_once $_SERVER["DOCUMENT_ROOT"] . '/app/models/Category.php';
 require_once $_SERVER["DOCUMENT_ROOT"] . '/utils/template.php';
 
 $item = new Item();
+$category_obj = new Category();
 
 if ($item->getById($_GET['id'])) {
     $content = template('views/item-page.php', ['item' => $item]);
@@ -25,4 +27,4 @@ if ($item->getById($_GET['id'])) {
     die();
 }
 
-echo template('views/layout.php', ['content' => $content, 'category' => $item->category_id]);
+echo template('views/layout.php', ['content' => $content, 'category' => $item->category_id, 'categories' => $category_obj->getAll()]);

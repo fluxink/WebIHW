@@ -181,3 +181,7 @@ img {
 .home-z {
     z-index: 101 !important;
 }
+
+body > div.overlay {
+    z-index: 119;
+  }

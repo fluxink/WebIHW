@@ -3,10 +3,10 @@
         <?php
         foreach ($items as $item) {
             echo '<div class="s12 m6 l4">';
-            echo '<article class="no-padding">';
+            echo '<article class="no-padding no-elevate">';
             echo '<a href="/item.php?id=' . $item['id'] . '">';
             $image = $item['image'] ? $item['image'] : 'no-image.png';
-            echo '<img class="responsive" src="/assets/images/' . $image . '" alt="">';
+            echo '<img class="responsive extra" src="/assets/images/' . $image . '" alt="">';
             echo '<div class="absolute bottom left right padding bottom-shadow white-text">';
             echo '<div class="padding left-align">';
             echo '<h5>' . htmlspecialchars($item['name']) . '</h5>';

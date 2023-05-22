@@ -107,7 +107,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
 }
 
 function saveImage(Item $item) {
-    # Save image if set
     if (isset($_FILES['image'])) {
         $image = $_FILES['image'];
         $image_name = $image['name'];
