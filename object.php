@@ -92,6 +92,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
         if (isset($_POST['id'])) {
             if ($category->getById($_POST['id'])) {
                 $category->name = $_POST['name'];
+                $category->icon = $_POST['icon'];
                 $category->update();
                 $message = 'Категорію успішно відредаговано';
             } else {

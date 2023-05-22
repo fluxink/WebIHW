@@ -16,40 +16,7 @@
 <body>
     <!-- Draw nav bar if user on catalog.php page -->
     <?php
-    if ((strpos($_SERVER['REQUEST_URI'], 'catalog.php') !== false) || (strpos($_SERVER['REQUEST_URI'], 'item.php') !== false)) {
-        $bedroom_id = '';
-        $living_room_id = '';
-        $kitchen_id = '';
-        $bathroom_id = '';
-        $kids_room_id = '';
-        $office_id = '';
-        $other_id = '';
-        foreach ($categories as $category_db) {
-            switch ($category_db['name']) {
-                case 'Спальня':
-                    $bedroom_id = $category_db['id'];
-                    break;
-                case 'Вітальня':
-                    $living_room_id = $category_db['id'];
-                    break;
-                case 'Кухня':
-                    $kitchen_id = $category_db['id'];
-                    break;
-                case 'Ванна кімната':
-                    $bathroom_id = $category_db['id'];
-                    break;
-                case 'Дитяча кімната':
-                    $kids_room_id = $category_db['id'];
-                    break;
-                case 'Офіс':
-                    $office_id = $category_db['id'];
-                    break;
-                case 'Інше':
-                    $other_id = $category_db['id'];
-                    break;
-            }
-        }
-    ?>
+    if ((strpos($_SERVER['REQUEST_URI'], 'catalog.php') !== false) || (strpos($_SERVER['REQUEST_URI'], 'item.php') !== false)) { ?>
         <nav class="m l left">
             <a class="no-padding" href="/catalog.php">
                 <img class="round large" src="assets/logo.png">
@@ -58,34 +25,15 @@
                 <i>apps</i>
                 <span>Все</span>
             </a>
-            <a href="?category=<?php echo $bedroom_id ?>" class="<?php echo $category == $bedroom_id ? 'active' : ''; ?>">
-                <i>bed</i>
-                <span>Спальня</span>
-            </a>
-            <a href="?category=<?php echo $living_room_id ?>" class="<?php echo $category == $living_room_id ? 'active' : ''; ?>">
-                <i>chair</i>
-                <span>Вітальня</span>
-            </a>
-            <a href="?category=<?php echo $kitchen_id ?>" class="<?php echo $category == $kitchen_id ? 'active' : ''; ?>">
-                <i>kitchen</i>
-                <span>Кухня</span>
-            </a>
-            <a href="?category=<?php echo $bathroom_id ?>" class="<?php echo $category == $bathroom_id ? 'active' : ''; ?>">
-                <i>bathtub</i>
-                <span>Ванна кімната</span>
-            </a>
-            <a href="?category=<?php echo $kids_room_id ?>" class="<?php echo $category == $kids_room_id ? 'active' : ''; ?>">
-                <i>crib</i>
-                <span>Дитяча кімната</span>
-            </a>
-            <a href="?category=<?php echo $office_id ?>" class="<?php echo $category == $office_id ? 'active' : ''; ?>">
-                <i>apartment</i>
-                <span>Офіс</span>
-            </a>
-            <a href="?category=<?php echo $other_id ?>" class="<?php echo $category == $other_id ? 'active' : ''; ?>">
-                <i>more_horiz</i>
-                <span>Інше</span>
-            </a>
+            <?php
+            foreach ($categories as $category_db) { ?>
+                <a href="?category=<?php echo $category_db['id']; ?>" class="<?php echo $category == $category_db['id'] ? 'active' : ''; ?>">
+                    <i><?php echo $category_db['icon']; ?></i>
+                    <span><?php echo $category_db['name']; ?></span>
+                </a>
+            <?php
+            }
+            ?>
         </nav>
         <nav class="s bottom">
             <a data-ui="#modal-navigation-drawer">
@@ -111,34 +59,15 @@
                 <i>apps</i>
                 <span>Все</span>
             </a>
-            <a href="?category=<?php echo $bedroom_id ?>" class="row round <?php echo $category == $bedroom_id ? 'active' : ''; ?>">
-                <i>bed</i>
-                <span>Спальня</span>
-            </a>
-            <a href="?category=<?php echo $living_room_id ?>" class="row round <?php echo $category == $living_room_id ? 'active' : ''; ?>">
-                <i>chair</i>
-                <span>Вітальня</span>
-            </a>
-            <a href="?category=<?php echo $kitchen_id ?>" class="row round <?php echo $category == $kitchen_id ? 'active' : ''; ?>">
-                <i>kitchen</i>
-                <span>Кухня</span>
-            </a>
-            <a href="?category=<?php echo $bathroom_id ?>" class="row round <?php echo $category == $bathroom_id ? 'active' : ''; ?>">
-                <i>bathtub</i>
-                <span>Ванна кімната</span>
-            </a>
-            <a href="?category=<?php echo $kids_room_id ?>" class="row round <?php echo $category == $kids_room_id ? 'active' : ''; ?>">
-                <i>crib</i>
-                <span>Дитяча кімната</span>
-            </a>
-            <a href="?category=<?php echo $office_id ?>" class="row round <?php echo $category == $office_id ? 'active' : ''; ?>">
-                <i>apartment</i>
-                <span>Офіс</span>
-            </a>
-            <a href="?category=<?php echo $other_id ?>" class="row round <?php echo $category == $other_id ? 'active' : ''; ?>">
-                <i>more_horiz</i>
-                <span>Інше</span>
-            </a>
+            <?php
+            foreach ($categories as $category_db) { ?>
+                <a href="?category=<?php echo $category_db['id']; ?>" class="row round <?php echo $category == $category_db['id'] ? 'active' : ''; ?>">
+                    <i><?php echo $category_db['icon']; ?></i>
+                    <span><?php echo $category_db['name']; ?></span>
+                </a>
+            <?php
+            }
+            ?>
             <div class="max"></div>
             <div class="small-divider"></div>
             <a class="row round" href="/profile.php">
@@ -163,8 +92,8 @@
             <div class="m l max"></div>
             <div class="large-space s"></div>
             <div class="s"><a href="/">
-                <h4 class="bold">Stick Shop</h4>
-            </a></div>
+                    <h4 class="bold">Stick Shop</h4>
+                </a></div>
 
             <?php
             if (isset($_SESSION['user'])) {

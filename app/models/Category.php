@@ -6,6 +6,7 @@ require_once $_SERVER["DOCUMENT_ROOT"] . '/app/core/Model.php';
 class Category extends Model {
     public $id;
     public $name;
+    public $icon;
 
     public function __construct() {
         parent::__construct();
@@ -21,13 +22,13 @@ class Category extends Model {
     }
 
     public function save() {
-        $fields = 'name';
-        $data = "'$this->name'";
+        $fields = 'name, icon';
+        $data = "'$this->name', '$this->icon'";
         $this->db->insertData('categories', $data, $fields);
     }
 
     public function update() {
-        $data = "name = '$this->name'";
+        $data = "name = '$this->name', icon = '$this->icon'";
         $this->db->updateData('categories', $data, "id = '$this->id'");
     }
 
@@ -52,5 +53,6 @@ function extractCategoryFromPost($post) {
     $category = new Category();
     $category->id = $post['id'] ?? '';
     $category->name = $post['name'] ?? '';
+    $category->icon = $post['icon'] ?? '';
     return $category;
 }

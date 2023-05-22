@@ -10,6 +10,10 @@
             <input type="text" name="name" value="<?php echo empty($data['name']) ? '' : $data['name']; ?>" required>
             <label class="active">Назва</label>
         </div>
+        <div class="field label border">
+            <input type="text" name="icon" value="<?php echo empty($data['icon']) ? '' : $data['icon']; ?>" required>
+            <label class="active">Значок</label>
+        </div>
         <button class="no-margin" type="submit">
             Зберегти
         </button>

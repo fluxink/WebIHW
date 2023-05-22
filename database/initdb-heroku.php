@@ -35,6 +35,7 @@ $sql = "CREATE TABLE IF NOT EXISTS `users` (
         CREATE TABLE IF NOT EXISTS `categories` (
         `id` int(11) NOT NULL AUTO_INCREMENT,
         `name` varchar(255) NOT NULL,
+        `icon` varchar(255) NOT NULL,
         PRIMARY KEY (`id`)
         ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=1;
 
@@ -63,14 +64,14 @@ if (mysqli_multi_query($conn, $sql)) {
     echo "Error creating tables: " . mysqli_error($conn) . "<br>";
 }
 
-$sql = "INSERT INTO `categories` (`name`) VALUES
-    ('Спальня'),
-    ('Вітальня'),
-    ('Кухня'),
-    ('Ванна кімната'),
-    ('Дитяча кімната'),
-    ('Офіс'),
-    ('Інше');";
+$sql = "INSERT INTO `categories` (`name`, `icon`) VALUES
+    ('Спальня', 'bed'),
+    ('Вітальня', 'chair'),
+    ('Кухня', 'kitchen'),
+    ('Ванна кімната', 'bathtub'),
+    ('Дитяча кімната', 'crib'),
+    ('Офіс', 'apartment'),
+    ('Інше', 'more_horiz');";
 
 // Free up any pending result sets
 while (mysqli_more_results($conn)) {
