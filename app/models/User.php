@@ -8,8 +8,7 @@ if (!isset($_SESSION)) {
 require_once $_SERVER["DOCUMENT_ROOT"] . '/app/core/Model.php';
 
 #[AllowDynamicProperties]
-class User extends Model
-{
+class User extends Model {
     public $email;
     public $password;
     public $role;
@@ -21,13 +20,11 @@ class User extends Model
     public $phone = null;
     public $errors = [];
 
-    public function __construct()
-    {
+    public function __construct() {
         parent::__construct();
     }
 
-    public function validate()
-    {
+    public function validate() {
         if (empty($this->email)) {
             $this->errors['email'] = 'Email обов\'язковий';
         } else if (!filter_var($this->email, FILTER_VALIDATE_EMAIL)) {
@@ -64,8 +61,8 @@ class User extends Model
         return $this->errors;
     }
 
-    public function isExist()
-    {
+    public function isExist() {
+        $this->selfEscape();
         $sql = "SELECT * FROM users WHERE email = '$this->email'";
         $this->db->runQuery($sql);
         if ($this->db->numRows() > 0) {
@@ -74,15 +71,14 @@ class User extends Model
         return false;
     }
 
-    public function save()
-    {
+    public function save() {
+        $this->selfEscape();
         $fields = 'email, password, role, first_name, last_name, phone, address, city, zip';
         $data = "'$this->email', '$this->password', '$this->role', '$this->first_name', '$this->last_name', '$this->phone', '$this->address', '$this->city', '$this->zip'";
         $this->db->insertData('users', $data, $fields);
     }
 
-    public function register()
-    {
+    public function register() {
         if ($this->isExist()) {
             return false;
         }
@@ -92,8 +88,8 @@ class User extends Model
         return true;
     }
 
-    public function login()
-    {
+    public function login() {
+        $this->selfEscape();
         $sql = "SELECT * FROM users WHERE email = '$this->email'";
         $this->db->runQuery($sql);
         $user = $this->db->getData();
@@ -106,13 +102,12 @@ class User extends Model
         return false;
     }
 
-    public function logout()
-    {
+    public function logout() {
         unset($_SESSION['user']);
     }
 
-    public function update()
-    {
+    public function update() {
+        $this->selfEscape();
         $data = "first_name = '$this->first_name', last_name = '$this->last_name', phone = '$this->phone', address = '$this->address', city = '$this->city', zip = '$this->zip'";
         $this->db->updateData('users', $data, "email = '$this->email'");
         if ($this->db->last) {
@@ -121,8 +116,7 @@ class User extends Model
         return false;
     }
 
-    public function getAll()
-    {
+    public function getAll() {
         $sql = "SELECT id, email, first_name, last_name, phone, address, city, zip, role FROM users";
         $this->db->runQuery($sql);
         while ($row = $this->db->getData()) {
@@ -131,10 +125,20 @@ class User extends Model
         return $users ?? [];
     }
 
-    public function getByEmail()
-    {
+    public function getByEmail() {
+        $this->selfEscape();
         $sql = "SELECT * FROM users WHERE email = '$this->email'";
         $this->db->runQuery($sql);
         return $this->db->getData();
+    }
+
+    private function selfEscape() {
+        $this->email = mysqli_real_escape_string($this->db->getLink(), $this->email ?? '');
+        $this->first_name = mysqli_real_escape_string($this->db->getLink(), $this->first_name ?? '');
+        $this->last_name = mysqli_real_escape_string($this->db->getLink(), $this->last_name ?? '');
+        $this->phone = mysqli_real_escape_string($this->db->getLink(), $this->phone ?? '');
+        $this->address = mysqli_real_escape_string($this->db->getLink(), $this->address ?? '');
+        $this->city = mysqli_real_escape_string($this->db->getLink(), $this->city ?? '');
+        $this->zip = mysqli_real_escape_string($this->db->getLink(), $this->zip ?? '');
     }
 }
