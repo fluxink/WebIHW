@@ -14,7 +14,7 @@ $page = !empty($_GET['page']) ? $_GET['page'] : 1;
 $limit = !empty($_GET['limit']) ? $_GET['limit'] : 6;
 $category = !empty($_GET['category']) ? $_GET['category'] : false;
 $sort = !empty($_GET['sort']) ? $_GET['sort'] : 'id';
-$asc = isset($_GET['asc']) ? $_GET['asc'] : true;
+$asc = $_GET['asc'] ?? true;
 
 $item = new Item();
 

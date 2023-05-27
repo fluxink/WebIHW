@@ -12,8 +12,8 @@ if (!isset($_SESSION['user'])) {
     die();
 }
 
-$page = isset($_GET['page']) ? $_GET['page'] : 1;
-$limit = isset($_GET['limit']) ? $_GET['limit'] : 10;
+$page = $_GET['page'] ?? 1;
+$limit = $_GET['limit'] ?? 10;
 
 if (isset($_GET['items'])) {
     require_once $_SERVER["DOCUMENT_ROOT"] . '/app/models/Item.php';
